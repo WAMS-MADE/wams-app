@@ -14,14 +14,22 @@ export class AppComponent {
   age = 30;
   gender = 'male';
   genderInt = 1;
-  model: any;
-  predictionValue: number;
+  hipModel: any;
+  hipPredictionValue: number;
+
+  upperLegModel: any;
+  upperLegPredictionValue: number;
+
+  lowerLegModel: any;
+  lowerLegPredictionValue: number;
 
   constructor() {
   }
 
   async ngOnInit() {
-    await this.loadModel();
+    await this.loadHipModel();
+    await this.loadUpperLegModel();
+    await this.loadLowerLegModel();
     this.predict();
 
   }
@@ -40,7 +48,6 @@ export class AppComponent {
   }
 
   onChangeWeight(event: any) {
-    console.log('onChangeWeight', event);
     this.weightInPounds = +event.target.value;
     this.predict();
 
@@ -63,16 +70,28 @@ export class AppComponent {
   }
 
   //load tensorflow model
-  async loadModel() {
-    this.model = await tf.loadGraphModel('assets/model.json');
+  async loadHipModel() {
+    this.hipModel = await tf.loadGraphModel('assets/hip_model/model.json');
+  }
+  async loadUpperLegModel() {
+    this.upperLegModel = await tf.loadGraphModel('assets/upper_leg_model/model.json');
+  }
+
+  async loadLowerLegModel() {
+    this.lowerLegModel = await tf.loadGraphModel('assets/lower_leg_model/model.json');
   }
 
   //predict
   predict() {
     const example = tf.tensor2d([this.age, 	this.heightInInches,	this.weightInPounds, this.genderInt], [1,4]);  // for example
 
-    const prediction = this.model.predict(example);
-    const value = prediction.dataSync()[0];
-    this.predictionValue = value;
+    const hipPrediction = this.hipModel.predict(example);
+    this.hipPredictionValue = hipPrediction.dataSync()[0];
+
+    const upperLegPrediction = this.upperLegModel.predict(example);
+    this.upperLegPredictionValue = upperLegPrediction.dataSync()[0];
+
+    const lowerLegPrediction = this.lowerLegModel.predict(example);
+    this.lowerLegPredictionValue = lowerLegPrediction.dataSync()[0];
   }
 }

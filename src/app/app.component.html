@@ -47,11 +47,19 @@
           <label for="default-radio-1" class="ml-2 pr-5 text-sm font-medium text-gray-900 ">Other</label>
         </div>
         <!-- large prediction text -->
-        <div class="flex justify-center items-center mb-3">
-          <h2 id="prediction" class="text-2xl font-bold text-center text-gray-900">Hip Width Prediction:</h2>
-        </div>
-        <div class="flex border border-sky-500 justify-center items-center mb-3">
-          <h1 id="prediction_value" class="text-4xl p-4 font-bold text-center text-gray-900">{{predictionValue | number : '1.2-2'}}</h1><p>inches</p>
+        <div class="block border border-sky-500 justify-center items-center mb-3">
+          <div class="flex justify-center items-center mb-3">
+            <h2 data-tooltip-target="tooltip-default" id="prediction" class="text-sm font-bold text-center text-gray-900">Hip Width Prediction:</h2>
+            <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{hipPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
+          </div>
+          <div class="flex justify-center items-center mb-3">
+            <h2 id="prediction" class="text-sm font-bold text-center text-gray-900">Upper Leg Prediction:</h2>
+            <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{upperLegPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
+          </div>
+          <div class="flex justify-center items-center mb-3">
+            <h2 id="prediction" class="text-sm font-bold text-center text-gray-900">Lower Leg Prediction:</h2>
+            <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{lowerLegPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
+          </div>
         </div>
         <!-- submit button -->
 
