@@ -81,17 +81,32 @@ export class AppComponent {
     this.lowerLegModel = await tf.loadGraphModel('assets/lower_leg_model/model.json');
   }
 
+  formatLabel(inches: number): string {
+    var feet = Math.floor(inches / 12);
+    var remainingInches = inches % 12;
+    // return `${feet} ft ${remainingInches} in` ;
+    return `${inches}`
+  }
+
   //predict
   predict() {
     const example = tf.tensor2d([this.age, 	this.heightInInches,	this.weightInPounds, this.genderInt], [1,4]);  // for example
 
     const hipPrediction = this.hipModel.predict(example);
-    this.hipPredictionValue = hipPrediction.dataSync()[0];
+    this.hipPredictionValue = this.roundToNearestQuarterInch(hipPrediction.dataSync()[0]);
+
 
     const upperLegPrediction = this.upperLegModel.predict(example);
-    this.upperLegPredictionValue = upperLegPrediction.dataSync()[0];
+    this.upperLegPredictionValue = this.roundToNearestQuarterInch(upperLegPrediction.dataSync()[0]);
 
     const lowerLegPrediction = this.lowerLegModel.predict(example);
-    this.lowerLegPredictionValue = lowerLegPrediction.dataSync()[0];
+    this.lowerLegPredictionValue = this.roundToNearestQuarterInch(lowerLegPrediction.dataSync()[0]);
+  }
+
+  //round to nearest quarter inch
+  roundToNearestQuarterInch(inches: number) {
+    var quarterInch = 1 / 4; // Represents a quarter inch
+    var roundedInches = Math.round(inches * 4) / 4; // Round to nearest quarter inch
+    return roundedInches;
   }
 }
