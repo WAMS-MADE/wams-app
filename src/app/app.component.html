@@ -11,6 +11,16 @@
         <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
         </svg> -->
       <!-- <h1 class="tracking-wide text-3xl text-gray-900">WAMS</h1> -->
+      <label for="height-range" class="block font-extrabold mb-2 underline text-sm text-center text-slate-700">Model:</label>
+      <div>
+        <!-- <mat-radio-group aria-label="Select an option">
+          <mat-radio-button value="1">Linear Regression</mat-radio-button>
+          <mat-radio-button value="2">LightGBM</mat-radio-button>
+        </mat-radio-group> -->
+        <mat-radio-group name="modelList" [(ngModel)]="chosenModel" (change)="onChangeModel($event)">
+          <mat-radio-button *ngFor="let op of modelButtons" [value]="op.name" name="opList" >{{ op.name}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
         <form id="wams_form" action="api_login" method="POST"
         class="flex flex-col">
@@ -74,7 +84,7 @@
           </div>
         </div>
         <div>
-          <img src="assets/images/made_logo.png" alt="WAMS Logo" class="w-22 h-28 mx-auto">
+          <img src="assets/images/recover-logo.png" alt="WAMS Logo" class="w-22 h-28 mx-auto">
 
         </div>
         <!-- submit button -->

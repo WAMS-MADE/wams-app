@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import * as tf from '@tensorflow/tfjs';
+import { OnnxModelService } from './services/onnx-model.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,15 @@ export class AppComponent {
   lowerLegModel: any;
   lowerLegPredictionValue: number;
 
-  constructor() {
+  modelButtons = [
+      {"name": "Linear Regression", ID: "reg"},
+      {"name": "LightGBM", ID: "lgbm"}
+    ];
+
+  chosenModel = this.modelButtons[0].name;
+
+
+  constructor(private onnxModel: OnnxModelService) {
   }
 
   async ngOnInit() {
@@ -69,6 +78,12 @@ export class AppComponent {
     this.predict();
   }
 
+  onChangeModel(event: any) {
+    console.log(event);
+    this.chosenModel = event.value;
+    this.predict();
+  }
+
   //load tensorflow model
   async loadHipModel() {
     this.hipModel = await tf.loadGraphModel('assets/hip_model/model.json');
@@ -89,18 +104,30 @@ export class AppComponent {
   }
 
   //predict
-  predict() {
+  async predict() {
     const example = tf.tensor2d([this.age, 	this.heightInInches,	this.weightInPounds, this.genderInt], [1,4]);  // for example
+    if (this.chosenModel === 'Linear Regression') {
+      const hipPrediction = this.hipModel.predict(example);
+      this.hipPredictionValue = this.roundToNearestQuarterInch(hipPrediction.dataSync()[0]);
 
-    const hipPrediction = this.hipModel.predict(example);
-    this.hipPredictionValue = this.roundToNearestQuarterInch(hipPrediction.dataSync()[0]);
+
+      const upperLegPrediction = this.upperLegModel.predict(example);
+      this.upperLegPredictionValue = this.roundToNearestQuarterInch(upperLegPrediction.dataSync()[0]);
+
+      const lowerLegPrediction = this.lowerLegModel.predict(example);
+      this.lowerLegPredictionValue = this.roundToNearestQuarterInch(lowerLegPrediction.dataSync()[0]);
+    }
+    else if (this.chosenModel === 'LightGBM') {
+      await this.onnxModel.predict(this.age, this.heightInInches,	this.weightInPounds, this.genderInt).then
+      (predictions => {
+        this.hipPredictionValue = this.roundToNearestQuarterInch(predictions as number);
+        this.upperLegPredictionValue = null;
+        this.lowerLegPredictionValue = null;
+      });
+    }
 
 
-    const upperLegPrediction = this.upperLegModel.predict(example);
-    this.upperLegPredictionValue = this.roundToNearestQuarterInch(upperLegPrediction.dataSync()[0]);
 
-    const lowerLegPrediction = this.lowerLegModel.predict(example);
-    this.lowerLegPredictionValue = this.roundToNearestQuarterInch(lowerLegPrediction.dataSync()[0]);
   }
 
   //round to nearest quarter inch
