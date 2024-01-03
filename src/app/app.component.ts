@@ -84,9 +84,7 @@ export class AppComponent {
   }
 
   onChangeModel(event: any) {
-    console.log(event);
     this.chosenModel = event.value;
-    console.log(this.chosenModel);
     if (this.chosenModel === 'Linear Regression') {
       this.upper90Quantile = null;
       this.lower10Quantile = null;
@@ -142,23 +140,18 @@ export class AppComponent {
       await this.onnxConfModel.predictBase(this.age, this.heightInInches,	this.weightInPounds, this.genderInt).then
       (predictions => {
         this.hipPredictionValue = this.roundToNearestQuarterInch(predictions as number);
-        console.log(predictions);
         this.upperLegPredictionValue = null;
         this.lowerLegPredictionValue = null;
       });
       await this.onnxConfModel.predict10PercentQuantile(this.age, this.heightInInches,	this.weightInPounds, this.genderInt).then
       (predictions => {
         this.lower10Quantile = predictions as number;
-        console.log(predictions);
       });
       await this.onnxConfModel.predict90PercentQuantile(this.age, this.heightInInches,	this.weightInPounds, this.genderInt).then
       (predictions => {
         this.upper90Quantile = predictions as number;
-        console.log(predictions);
       });
       this.confidenceSpan = this.upper90Quantile - this.lower10Quantile;
-
-      console.log('Confidence Span: ', this.confidenceSpan);
     }
 
 

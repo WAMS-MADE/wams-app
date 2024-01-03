@@ -26,7 +26,6 @@ export class OnnxConfModelService {
 
     const input = new Tensor(new Float32Array([Heightin, Weightlbs, Age, Gender]) as Tensor.DataTypeMap['float32'], [1, 4]);
     const outputMap = await this.session.run({X: input});
-    console.log(outputMap);
     return outputMap['variable'].data[0]
   }
 
@@ -36,9 +35,7 @@ export class OnnxConfModelService {
     this.session = await InferenceSession.create(url);
 
     const input = new Tensor(new Float32Array([Heightin, Weightlbs, Age, Gender]) as Tensor.DataTypeMap['float32'], [1, 4]);
-    console.log(input);
     const outputMap = await this.session.run({X: input});
-    console.log(outputMap);
     return outputMap['variable'].data[0]
   }
 
@@ -47,9 +44,7 @@ export class OnnxConfModelService {
     this.session = await InferenceSession.create(url);
 
     const input = new Tensor(new Float32Array([Heightin, Weightlbs, Age, Gender]) as Tensor.DataTypeMap['float32'], [1, 4]);
-    console.log(input);
     const outputMap = await this.session.run({X: input});
-    console.log(outputMap);
     return outputMap['variable'].data[0]
   }
 }
