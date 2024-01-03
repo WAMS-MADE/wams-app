@@ -74,11 +74,19 @@
             <h2 data-tooltip-target="tooltip-default" id="prediction" class="text-sm font-bold text-center text-gray-900">Hip Width Prediction:</h2>
             <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{hipPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
           </div>
-          <div class="flex justify-center items-center mb-3">
+          <div *ngIf="lower10Quantile || upper90Quantile">
+            <div  class="bound float-root justify-center items-center">
+              <p [ngClass]="{'boundItemGreen' : confidenceSpan <= 2, 'boundItemYellow': confidenceSpan > 2 && confidenceSpan <= 4, 'boundItemRed': confidenceSpan > 4 }" class="float-left" >{{ lower10Quantile | number : '1.2-2'}}</p>
+              <p [ngClass]="{'boundItemGreen' : confidenceSpan <= 2, 'boundItemYellow': confidenceSpan > 2 && confidenceSpan <= 4, 'boundItemRed': confidenceSpan > 4 }" class="float-right">{{ upper90Quantile | number : '1.2-2'}}</p>
+            </div>
+            <p class="font-bold items-center text-center">confidence span</p>
+            <p class="font-bold items-center text-center">{{ confidenceSpan | number : '1.2-2'}}</p>
+          </div>
+          <div *ngIf="upperLegPredictionValue" class="flex justify-center items-center mb-4">
             <h2 id="prediction" class="text-sm font-bold text-center text-gray-900">Upper Leg Prediction:</h2>
             <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{upperLegPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
           </div>
-          <div class="flex justify-center items-center mb-3">
+          <div  *ngIf="lowerLegPredictionValue" class="flex justify-center items-center mb-3">
             <h2 id="prediction" class="text-sm font-bold text-center text-gray-900">Lower Leg Prediction:</h2>
             <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{lowerLegPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
           </div>

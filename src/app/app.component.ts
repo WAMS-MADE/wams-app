@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import * as tf from '@tensorflow/tfjs';
 import { OnnxModelService } from './services/onnx-model.service';
+import { OnnxConfModelService } from './services/onnx-conf-model.service';
 
 @Component({
   selector: 'app-root',
@@ -26,13 +27,17 @@ export class AppComponent {
 
   modelButtons = [
       {"name": "Linear Regression", ID: "reg"},
-      {"name": "LightGBM", ID: "lgbm"}
+      // {"name": "LightGBM", ID: "lgbm"},
+      {"name": "LightGBM Conf", ID: "conf"}
     ];
 
   chosenModel = this.modelButtons[0].name;
+  lower10Quantile: number;
+  upper90Quantile: number;
+  confidenceSpan: number;
 
 
-  constructor(private onnxModel: OnnxModelService) {
+  constructor(private onnxModel: OnnxModelService, private onnxConfModel: OnnxConfModelService) {
   }
 
   async ngOnInit() {
@@ -81,6 +86,12 @@ export class AppComponent {
   onChangeModel(event: any) {
     console.log(event);
     this.chosenModel = event.value;
+    console.log(this.chosenModel);
+    if (this.chosenModel === 'Linear Regression') {
+      this.upper90Quantile = null;
+      this.lower10Quantile = null;
+      this.confidenceSpan = null;
+    }
     this.predict();
   }
 
@@ -95,6 +106,7 @@ export class AppComponent {
   async loadLowerLegModel() {
     this.lowerLegModel = await tf.loadGraphModel('assets/lower_leg_model/model.json');
   }
+
 
   formatLabel(inches: number): string {
     var feet = Math.floor(inches / 12);
@@ -124,6 +136,29 @@ export class AppComponent {
         this.upperLegPredictionValue = null;
         this.lowerLegPredictionValue = null;
       });
+    }
+
+    else if (this.chosenModel === 'LightGBM Conf') {
+      await this.onnxConfModel.predictBase(this.age, this.heightInInches,	this.weightInPounds, this.genderInt).then
+      (predictions => {
+        this.hipPredictionValue = this.roundToNearestQuarterInch(predictions as number);
+        console.log(predictions);
+        this.upperLegPredictionValue = null;
+        this.lowerLegPredictionValue = null;
+      });
+      await this.onnxConfModel.predict10PercentQuantile(this.age, this.heightInInches,	this.weightInPounds, this.genderInt).then
+      (predictions => {
+        this.lower10Quantile = predictions as number;
+        console.log(predictions);
+      });
+      await this.onnxConfModel.predict90PercentQuantile(this.age, this.heightInInches,	this.weightInPounds, this.genderInt).then
+      (predictions => {
+        this.upper90Quantile = predictions as number;
+        console.log(predictions);
+      });
+      this.confidenceSpan = this.upper90Quantile - this.lower10Quantile;
+
+      console.log('Confidence Span: ', this.confidenceSpan);
     }
 
 
