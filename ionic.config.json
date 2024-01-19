@@ -1,0 +1,7 @@
+{
+  "name": "wams-ml-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

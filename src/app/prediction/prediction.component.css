@@ -1,0 +1,85 @@
+p.boundItemRed {
+  display: inline-block;
+  border: 4px solid red;
+  padding: 1em;
+  position:relative
+}
+
+.boundItemRed:before,
+.boundItemRed:after
+{
+  content:'';
+  width:5em;/* size of your margin */
+  border-bottom:4px solid red;
+  position:absolute;
+  top:50%;
+}
+:after {
+  left:100%;
+}
+:before {
+  right:100%;
+}
+.boundItemRed:first-of-type:before,
+.boundItemRed:last-of-type:after {
+  display:none;
+}
+
+
+
+
+p.boundItemYellow {
+  display: inline-block;
+  border: 4px solid yellow;
+  padding: 1em;
+  position:relative
+}
+
+.boundItemYellow:before,
+.boundItemYellow:after
+{
+  content:'';
+  width:5em;/* size of your margin */
+  border-bottom:4px solid yellow;
+  position:absolute;
+  top:50%;
+}
+:after {
+  left:100%;
+}
+:before {
+  right:100%;
+}
+.boundItemYellow:first-of-type:before,
+.boundItemYellow:last-of-type:after {
+  display:none;
+}
+
+
+
+p.boundItemGreen {
+  display: inline-block;
+  border: 4px solid green;
+  padding: 1em;
+  position:relative
+}
+
+.boundItemGreen:before,
+.boundItemGreen:after
+{
+  content:'';
+  width:5em;/* size of your margin */
+  border-bottom:4px solid green;
+  position:absolute;
+  top:50%;
+}
+:after {
+  left:100%;
+}
+:before {
+  right:100%;
+}
+.boundItemGreen:first-of-type:before,
+.boundItemGreen:last-of-type:after {
+  display:none;
+}

@@ -7,11 +7,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatRadioModule} from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
+import { PredictionComponent } from './prediction/prediction.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PredictionComponent,
+    ImageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -20,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatSliderModule,
     MatRadioModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
