@@ -1,0 +1,15 @@
+
+<div class="block border border-sky-500 justify-center items-center mb-3">
+  <div class="flex justify-center items-center mb-3">
+    <h2 data-tooltip-target="tooltip-default" id="prediction" class="text-sm font-bold text-center text-gray-900">{{ data.predictionTitle }}:</h2>
+    <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{ data.predictionValue | number : '1.2-2'}}</h1><p>inches</p>
+  </div>
+  <div *ngIf="data.lower10Quantile || data.upper90Quantile">
+    <div  class="bound float-root justify-center items-center">
+      <p [ngClass]="{'boundItemGreen' : data.confidenceSpan <= 2, 'boundItemYellow': data.confidenceSpan > 2 && data.confidenceSpan <= 4, 'boundItemRed': data.confidenceSpan > 4 }" class="float-left" >{{ data.lower10Quantile | number : '1.2-2'}}</p>
+      <p [ngClass]="{'boundItemGreen' : data.confidenceSpan <= 2, 'boundItemYellow': data.confidenceSpan > 2 && data.confidenceSpan <= 4, 'boundItemRed': data.confidenceSpan > 4 }" class="float-right">{{ data.upper90Quantile | number : '1.2-2'}}</p>
+    </div>
+    <p class="font-bold items-center text-center">confidence span</p>
+    <p class="font-bold items-center text-center">{{ data.confidenceSpan | number : '1.2-2'}}</p>
+  </div>
+</div>

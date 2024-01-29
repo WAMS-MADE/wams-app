@@ -1,0 +1,48 @@
+<!-- Show image on screen and set size -->
+
+<div class="object-center">
+  <img
+    src="assets/images/body1.png"
+    alt="Body Image"
+    class="img-fluid"
+    width="200" height="300"
+  />
+  <div class="absolute">
+    <div class="shoulders text-blue-700" (click)="openConfidenceModal(shoulderData)">
+      <p>{{shoulderData['0.5'] | number : '1.2-2'}}</p>
+    </div>
+    <div class="chest text-blue-700" (click)="openConfidenceModal(chestData)">
+      <p>{{chestData['0.5'] | number : '1.2-2'}}</p>
+    </div>
+    <div class="hips text-blue-700" (click)="openConfidenceModal(hipsData)">
+      <p>{{hipsData['0.5'] | number : '1.2-2'}}</p>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div>
+  <img
+    src="assets/images/body2.png"
+    alt="Body Image"
+    class="img-fluid"
+    width="500" height="300"
+  />
+
+  <div *ngIf="data" class="absolute">
+    <div class="sitting-height text-blue-700" (click)="openConfidenceModal(sittingHeightData)">
+      <p>{{sittingHeightData['0.5'] |  number : '1.2-2'}}</p>
+    </div>
+    <!-- <div class="shoulder-height text-blue-700">
+      <p>0</p>
+    </div> -->
+    <div class="upper-leg text-blue-700" (click)="openConfidenceModal(upperLegData)">
+      <p>{{upperLegData['0.5'] | number : '1.2-2'}}</p>
+    </div>
+    <div class="lower-leg text-blue-700" (click)="openConfidenceModal(lowerLegData)">
+      <p>{{lowerLegData['0.5'] | number : '1.2-2'}}</p>
+    </div>
+  </div>
+</div>
+

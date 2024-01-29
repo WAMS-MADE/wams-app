@@ -1,9 +1,9 @@
 <div class="bg-gradient-to-tr from-fuchsia-300 to-sky-500">
   <section
-    id="login"
-    class="p-4 flex flex-col justify-center min-h-screen max-w-md mx-auto"
+  id="login"
+  class="p-4 flex flex-col justify-center min-h-screen max-w-md mx-auto"
   >
-    <div class="p-6 bg-sky-100 rounded">
+  <div class="p-6 bg-sky-100 rounded">
       <div>
         <h3>Wheelchair Automated Measurement System</h3>
         <img
@@ -32,10 +32,11 @@
       >
         <div class="flex justify-between items-center mb-3">
           <label
-            for="height-range"
-            class="block font-extrabold mb-2 underline text-sm text-center text-slate-700"
-            >Height:</label
+          for="height-range"
+          class="block font-extrabold mb-2 underline text-sm text-center text-slate-700"
+          >Height:</label
           >
+          <input matInput type="text" [(ngModel)]="heightInInches" [value]="heightInInches" [ngModelOptions]="{standalone: true}" (change)="onChangeHeight($event)">
           <label
             for="height-range"
             class="block mb-2 text-sm font-medium text-slate-700"
@@ -66,6 +67,8 @@
             class="block font-extrabold mb-2 underline text-sm text-center text-slate-700"
             >Weight:</label
           >
+          <input matInput type="text" [(ngModel)]="weightInPounds" [value]="weightInPounds" [ngModelOptions]="{standalone: true}" (change)="onChangeWeight($event)">
+
           <label
             for="height-range"
             class="block mb-2 text-sm font-medium text-slate-700"
@@ -97,6 +100,8 @@
             class="block font-extrabold mb-2 underline text-sm text-center text-slate-700"
             >Age:</label
           >
+          <input matInput type="text" [(ngModel)]="age" [value]="age" [ngModelOptions]="{standalone: true}" (change)="onChangeAge($event)">
+
           <label
             for="height-range"
             class="block mb-2 text-sm font-medium text-slate-700"
@@ -172,41 +177,33 @@
             >Other</label
           >
         </div>
-        <!-- large prediction text -->
-        <div *ngFor="let prediction of targetPredictions">
-          <div class="block items-center mb-3 w-full">
-            <app-prediction
-              [predictionTitle]="prediction.target"
-              [predictionValue]="prediction['0.5']"
-              [lower10Quantile]="prediction['0.1']"
-              [upper90Quantile]="prediction['0.9']"
-              [confidenceSpan]="prediction.confidenceSpan"
-              (click)="onClickPrediction(prediction.target)"
-            ></app-prediction>
+
+      </form>
+
+      <!-- Section for images -->
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+        <mat-tab label="Image">
+          <div *ngIf="imageData" class="object-contain max-w-fit border border-sky-500 justify-center items-center">
+            <!-- <app-stick-figure></app-stick-figure>  -->
+            <app-body-image [data]="imageData"></app-body-image>
           </div>
-        </div>
-        <!-- <div class="block border border-sky-500 justify-center items-center mb-3">
-          <div class="flex justify-center items-center mb-3">
-            <h2 data-tooltip-target="tooltip-default" id="prediction" class="text-sm font-bold text-center text-gray-900">Hip Width Prediction:</h2>
-            <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{hipPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
-          </div>
-          <div *ngIf="lower10Quantile || upper90Quantile">
-            <div  class="bound float-root justify-center items-center">
-              <p [ngClass]="{'boundItemGreen' : confidenceSpan <= 2, 'boundItemYellow': confidenceSpan > 2 && confidenceSpan <= 4, 'boundItemRed': confidenceSpan > 4 }" class="float-left" >{{ lower10Quantile | number : '1.2-2'}}</p>
-              <p [ngClass]="{'boundItemGreen' : confidenceSpan <= 2, 'boundItemYellow': confidenceSpan > 2 && confidenceSpan <= 4, 'boundItemRed': confidenceSpan > 4 }" class="float-right">{{ upper90Quantile | number : '1.2-2'}}</p>
+        </mat-tab>
+        <mat-tab label="Prediction">
+          <!-- large prediction text -->
+          <div *ngFor="let prediction of targetPredictions">
+            <div class="block items-center mb-3 w-full">
+              <app-prediction
+                [predictionTitle]="prediction.target"
+                [predictionValue]="prediction['0.5']"
+                [lower10Quantile]="prediction['0.1']"
+                [upper90Quantile]="prediction['0.9']"
+                [confidenceSpan]="prediction.confidenceSpan"
+                (click)="onClickPrediction(prediction.target)"
+              ></app-prediction>
             </div>
-            <p class="font-bold items-center text-center">confidence span</p>
-            <p class="font-bold items-center text-center">{{ confidenceSpan | number : '1.2-2'}}</p>
           </div>
-          <div *ngIf="upperLegPredictionValue" class="flex justify-center items-center mb-4">
-            <h2 id="prediction" class="text-sm font-bold text-center text-gray-900">Upper Leg Prediction:</h2>
-            <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{upperLegPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
-          </div>
-          <div  *ngIf="lowerLegPredictionValue" class="flex justify-center items-center mb-3">
-            <h2 id="prediction" class="text-sm font-bold text-center text-gray-900">Lower Leg Prediction:</h2>
-            <h1 id="prediction_value" class="text-xl p-2 font-bold text-center text-gray-900">{{lowerLegPredictionValue | number : '1.2-2'}}</h1><p>inches</p>
-          </div>
-        </div> -->
+        </mat-tab>
+      </mat-tab-group>
         <div>
           <img
             src="assets/images/recover-logo.png"
@@ -214,13 +211,6 @@
             class="w-22 h-28 mx-auto"
           />
         </div>
-        <!-- submit button -->
-
-        <!-- <button class="px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 block transition duration-300" type="submit">
-            <span id="login_process_state" class="hidden">Sending :)</span>
-            <span id="login_default_state">Get Measures<span id="subtotal"></span></span>
-          </button> -->
-      </form>
     </div>
   </section>
 

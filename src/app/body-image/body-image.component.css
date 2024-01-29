@@ -1,0 +1,47 @@
+.shoulders {
+  display: block;
+  position: absolute;
+  top: -375px;
+  left: 85px;
+}
+
+.chest {
+  display: block;
+  position: absolute;
+  top: -320px;
+  left: 85px;
+}
+
+.hips {
+  display: block;
+  position: absolute;
+  top: -255px;
+  left: 85px;
+}
+
+.sitting-height {
+  display: block;
+  position: absolute;
+  top: -395px;
+  left: 20px;
+}
+.shoulder-height {
+  display: block;
+  position: absolute;
+  top: -290px;
+  left: 45px;
+}
+
+.upper-leg {
+  display: block;
+  position: absolute;
+  top: -103px;
+  left: 168px;
+}
+
+.lower-leg {
+  display: block;
+  position: absolute;
+  top: -73px;
+  left: 223px;
+}

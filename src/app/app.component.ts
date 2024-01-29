@@ -47,12 +47,15 @@ export class AppComponent {
     'buttockkneelength',
     'elbowrestheight',
     'kneeheightsitting',
+    'poplitealheight',
   ];
 
   chosenModel = 'LightGBM Conf';
   lower10Quantile: number;
   upper90Quantile: number;
   confidenceSpan: number;
+
+  imageData:ModelPrediction[] = null;
 
   constructor(
     private onnxModel: OnnxModelService,
@@ -175,8 +178,16 @@ export class AppComponent {
         // console.log(target);
         const prediction = await this.predictWithConfidence(target);
         this.targetPredictions.push(prediction);
+
+
       }
     }
+    this.updateImageValues(this.targetPredictions);
+  }
+
+  async updateImageValues(modelPredictions: ModelPrediction[]) {
+    console.log(modelPredictions);
+    this.imageData = modelPredictions;
   }
 
   async predictWithConfidence(targetMeasure: string) {

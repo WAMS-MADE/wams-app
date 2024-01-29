@@ -10,13 +10,22 @@ import { FormsModule } from '@angular/forms';
 import { PredictionComponent } from './prediction/prediction.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImageDialogComponent } from './image-dialog/image-dialog.component';
+import {MatButtonModule} from '@angular/material/button';
+import { BodyImageComponent } from './body-image/body-image.component';
+import { PredictionDialogComponent } from './prediction-dialog/prediction-dialog.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatTabsModule} from '@angular/material/tabs';
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PredictionComponent,
-    ImageDialogComponent
+    ImageDialogComponent,
+    BodyImageComponent,
+    PredictionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +35,9 @@ import { ImageDialogComponent } from './image-dialog/image-dialog.component';
     MatSliderModule,
     MatRadioModule,
     MatDialogModule,
+    MatButtonModule,
+    MatInputModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
