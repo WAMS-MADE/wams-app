@@ -50,6 +50,11 @@ export const MODELMAPS = {
     "0.1": "assets/confidence_models/lightgbm_model_kneeheightsitting_0.1_1-19-2024.onnx",
     "0.5": "assets/confidence_models/lightgbm_model_kneeheightsitting_0.5_1-19-2024.onnx",
     "0.9": "assets/confidence_models/lightgbm_model_kneeheightsitting_0.9_1-19-2024.onnx"
+  },
+  "poplitealheight": {
+    "0.1": "assets/confidence_models/lightgbm_model_poplitealheight_0.1_1-29-2024.onnx",
+    "0.5": "assets/confidence_models/lightgbm_model_poplitealheight_0.5_1-29-2024.onnx",
+    "0.9": "assets/confidence_models/lightgbm_model_poplitealheight_0.9_1-29-2024.onnx"
   }
 
 }
