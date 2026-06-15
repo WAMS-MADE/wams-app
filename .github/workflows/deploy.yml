@@ -16,6 +16,9 @@ concurrency:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -29,13 +32,21 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
       - name: Build Ionic App
         run: npm run build -- --configuration production --base-href /${{ github.event.repository.name }}/
+
+      - name: SPA fallback + nojekyll
+        run: |
+          cp dist/wams-ml-app/index.html dist/wams-ml-app/404.html
+          touch dist/wams-ml-app/.nojekyll
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'www/'
+          path: 'dist/wams-ml-app'
 
       - name: Deploy to GitHub Pages
         id: deployment
