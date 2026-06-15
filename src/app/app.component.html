@@ -182,12 +182,6 @@
 
       <!-- Section for images -->
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
-        <mat-tab label="Image">
-          <div *ngIf="imageData" class="object-contain max-w-fit border border-sky-500 justify-center items-center">
-            <!-- <app-stick-figure></app-stick-figure>  -->
-            <app-body-image [data]="imageData"></app-body-image>
-          </div>
-        </mat-tab>
         <mat-tab label="Prediction">
           <!-- large prediction text -->
           <div *ngFor="let prediction of targetPredictions">
@@ -201,6 +195,12 @@
                 (click)="onClickPrediction(prediction.target)"
               ></app-prediction>
             </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Image">
+          <div *ngIf="imageData" class="object-contain max-w-fit border border-sky-500 justify-center items-center">
+            <!-- <app-stick-figure></app-stick-figure>  -->
+            <app-body-image [data]="imageData"></app-body-image>
           </div>
         </mat-tab>
       </mat-tab-group>
